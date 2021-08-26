@@ -32,3 +32,40 @@ class Grid:
 
         return neighbors
 
+    def check_win(self, player):
+        """
+       Check the winning condition for a player.
+       :return: True or False
+       """
+        neighbors = []
+        if player == 1:
+            for y in range(self.get_size()):
+                if self.get_hex([0, y]) == 1:
+                    neighbors.append([0, y])
+        else:
+            for x in range(self.get_size()):
+                if self.get_hex([x, 0]) == 2:
+                    neighbors.append([x, 0])
+
+        if len(neighbors) == 0:
+            return False
+
+        # Checking if Player won
+        for neighbor in neighbors:
+            neighbors = self.neighbors(neighbor)
+            for next_neighbor in neighbors:
+                if self.get_hex(next_neighbor) == player and (next_neighbor not in neighbors):
+                    if next_neighbor[player-1] == self.get_size() - 1:
+                        return True
+                    else:
+                        neighbors.append(next_neighbor)
+
+        return False
+
+    def free_moves(self):
+        possible_moves = []
+        for x in range(self._size):
+            for y in range(self._size):
+                if self.get_hex([x,y]) == 0:
+                    possible_moves.append([x, y])
+        return possible_moves

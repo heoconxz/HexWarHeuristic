@@ -3,9 +3,11 @@ class Player:
     Class representing a player.
     You need to inherit from this class.
     """
-    def __init__(self, size):
+    def __init__(self, size, player_number, adv_number):
         self.name = "Player"
         self._size = size
+        self.player_number = player_number
+        self.adv_number = adv_number
 
     def step(self):
         """

@@ -5,7 +5,7 @@ from Players.Player import Player
 
 class RandomPlayer(Player):
     def __init__(self, size):
-        super().__init__(size)
+        super().__init__(size, 0, 0)
         self.name = "Random"
         self._possible_moves = []
 
