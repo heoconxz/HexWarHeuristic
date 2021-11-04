@@ -52,8 +52,8 @@ class Grid:
 
         # Checking if Player won
         for neighbor in neighbors:
-            neighbors = self.neighbors(neighbor)
-            for next_neighbor in neighbors:
+            potential_neighbors = self.neighbors(neighbor)
+            for next_neighbor in potential_neighbors:
                 if self.get_hex(next_neighbor) == player and (next_neighbor not in neighbors):
                     if next_neighbor[player-1] == self.get_size() - 1:
                         return True
@@ -66,6 +66,6 @@ class Grid:
         possible_moves = []
         for x in range(self._size):
             for y in range(self._size):
-                if self.get_hex([x,y]) == 0:
+                if self.get_hex([x, y]) == 0:
                     possible_moves.append([x, y])
         return possible_moves

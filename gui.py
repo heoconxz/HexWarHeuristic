@@ -48,6 +48,10 @@ class GUI:
             Winner(self)
 
     def _draw(self):
+        """
+        Draw the game.
+        Player one is in red and player two is in blue.
+        """
         size_hex = 20
         w = np.sqrt(3) * size_hex
         h = 2 * size_hex
@@ -56,8 +60,8 @@ class GUI:
             pos_x = w / 2 + (-1 * w / 2) + x * w
             self._draw_hex_no_border([pos_x, pos_y], 'blue')
         for x in range(1, self._grid.get_size()+1):
-            pos_y = w + (h * 3 / 4) * 11
-            pos_x = w / 2 + (11 * w / 2) + x * w
+            pos_y = w + (h * 3 / 4) * self._grid.get_size()
+            pos_x = w / 2 + (self._grid.get_size() * w / 2) + x * w
             self._draw_hex_no_border([pos_x, pos_y], 'blue')
         for y in range(self._grid.get_size()):
             pos_y = w + (h * 3 / 4) * y
@@ -65,7 +69,7 @@ class GUI:
             self._draw_hex_no_border([pos_x, pos_y], 'red')
         for y in range(self._grid.get_size()):
             pos_y = w + (h * 3 / 4) * y
-            pos_x = w / 2 + (y * w / 2) + 12 * w
+            pos_x = w / 2 + (y * w / 2) + (self._grid.get_size() + 1) * w
             self._draw_hex_no_border([pos_x, pos_y], 'red')
 
         for y in range(self._grid.get_size()):
@@ -81,6 +85,11 @@ class GUI:
                 self._draw_hex([pos_x, pos_y], color)
 
     def _draw_hex(self, coordinates, color='gray'):
+        """
+        Draw an hex at a specific location
+        :param coordinates: coordinate in the game
+        :param color: color of the hex.
+        """
         size = 20
         points = []
         for i in range(6):
