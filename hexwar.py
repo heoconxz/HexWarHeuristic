@@ -12,12 +12,12 @@ from gui import GUI
 #player1 = MinimaxPlayer(9, 1, 2)
 #player2 = MinimaxPlayer(9, 2, 1)
 
-player1 = MinimaxPlayer(7, 1, 2)
-player2 = NegmaxABPlayer_ImprovedHeuristic(7, 2, 1)
+player1 = MinimaxPlayer(5, 1, 2)
+player2 = NegmaxABPlayer_ImprovedHeuristic(5, 2, 1)
 
 
 #player1 = MinimaxPlayer(5, 1, 2)
 #player2 = NegmaxABPlayer(5, 2, 1)
 
-controller = Controller(7, player1, player2)
+controller = Controller(5, player1, player2)
 gui = GUI(controller)

@@ -27,7 +27,6 @@ class NegmaxPlayer_ImprovedHeuristic(Player):
         for move in self.node.free_moves():
             new_node = copy.deepcopy(self.node)
             new_node.set_hex(self.player_number, move)
-            # Execute te alpha beta algorithm.
             value = -self.negMax(new_node, 2, self.adv_number)
             if value > best:
                 best = value
@@ -55,14 +54,15 @@ class NegmaxPlayer_ImprovedHeuristic(Player):
         :param depth: depth remaining.
         :return: The value of node.
         """
+        turn = 1
+        if player == self.adv_number:
+            turn = -1
         if node.check_win(self.player_number):
-            return np.inf
+            return np.inf*turn
         if node.check_win(self.adv_number):
-            return -np.inf
+            return -np.inf*turn
         if depth == 0:
-            if player == self.adv_number:
-                return -self.heuristic_connected(node)
-            return self.heuristic_connected(node)
+            return self.heuristic_connected(node)*turn
 
         if player == self.player_number:
             other_player = self.adv_number
@@ -71,7 +71,7 @@ class NegmaxPlayer_ImprovedHeuristic(Player):
         value = -np.inf
         for move in node.free_moves():
             new_node = copy.deepcopy(node)
-            new_node.set_hex(self.player_number, move)
+            new_node.set_hex(player, move)
             value = max(value, -self.negMax(new_node, depth - 1,other_player))
            
         return value
