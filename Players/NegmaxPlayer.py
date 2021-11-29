@@ -3,6 +3,7 @@ import numpy as np
 from Players.Player import Player
 from grid import Grid
 import copy
+import datetime
 
 
 class NegmaxPlayer(Player):
@@ -11,12 +12,15 @@ class NegmaxPlayer(Player):
         self.name = "Negmax"
         self._possible_moves = []
         self.node = Grid(size)
+        self.store_average_action_time = []
+        self.average_action_time = 0
 
     def step(self):
         """
         Calculate the best action to execute and execute it.
         :return: Action executed
         """
+        start_time = datetime.datetime.now()
         best_move = self.node.free_moves()[0]
         best = -np.inf
         alpha = best
@@ -30,6 +34,9 @@ class NegmaxPlayer(Player):
                 best_move = move
             alpha = max(alpha, best)
         self.node.set_hex(self.player_number, best_move)
+        end_time = datetime.datetime.now()
+        timeForOneAction = (end_time - start_time).total_seconds()
+        self.store_average_action_time.append(timeForOneAction)
         return best_move
 
     def update(self, move_other_player):
@@ -105,3 +112,12 @@ class NegmaxPlayer(Player):
                 if self.node.get_hex(next_neighbor) == player and (next_neighbor not in neighbors):
                     neighbors.append(next_neighbor)
         return len(neighbors), []
+    def calc_average_time(self):
+        self.end_game_time = datetime.datetime.now()
+        total_game_time = 0
+        for t in self.store_average_action_time:
+            total_game_time += t
+        self.average_action_time = total_game_time / len(self.store_average_action_time)
+        total_game_time = (self.end_game_time - self.start_game_time).total_seconds()
+        print(f'Average Time to execute an action {round(self.average_action_time,4)} seconds.')
+        return print(f'Total time take for player complete the game {round(total_game_time,2)} seconds.')
